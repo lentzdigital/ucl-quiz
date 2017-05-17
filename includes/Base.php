@@ -58,4 +58,37 @@ class Base
 			'label'  => 'Answers'
 		]);
 	}
+
+
+	/**
+	 * Method for activation
+	 */
+	
+
+	public static function activation()
+	{
+
+	}
+
+
+	/**
+	 * Method for deactivation
+	 */
+
+
+	public static function deactivation()
+	{
+
+	}
+
+
+	/**
+	 * Method for uninstall
+	 */
+	
+
+	public static function uninstall()
+	{
+
+	}
 }
