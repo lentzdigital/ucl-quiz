@@ -43,8 +43,8 @@ class UCL_Quiz
 		$this->plugin_slug = 'ucl-quiz';
 		$this->version     = '0.1.0';
 
-		$this->loadDependencies();
-		$this->defineHooks();
+		$this->load_dependencies();
+		$this->define_hooks();
 	}
 
 
@@ -98,7 +98,7 @@ class UCL_Quiz
 	 * @return string Plugin version number
 	 */
 	
-	
+
 	public function get_verison()
 	{
 		return $this->version;
