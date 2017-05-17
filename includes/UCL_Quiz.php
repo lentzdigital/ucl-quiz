@@ -44,6 +44,7 @@ class UCL_Quiz
 		$this->version     = '0.1.0';
 
 		$this->load_dependencies();
+		$this->loader = new Loader;
 		$this->define_hooks();
 	}
 
@@ -66,7 +67,8 @@ class UCL_Quiz
 
 	public function define_hooks()
 	{
-
+		$base = new Base;
+		$this->loader->add_action('init', $base, 'add_post_types');
 	}
 
 
@@ -78,7 +80,8 @@ class UCL_Quiz
 
 	private function load_dependencies()
 	{
-
+		require_once plugin_dir_path(__FILE__) . 'Loader.php';
+		require_once plugin_dir_path(__FILE__) . 'Base.php';
 	}
 
 
