@@ -102,8 +102,14 @@ class UCL_Quiz
 	 */
 	
 
-	public function get_verison()
+	public function get_version()
 	{
 		return $this->version;
+	}
+
+
+	public function set_tables()
+	{
+	
 	}
 }
