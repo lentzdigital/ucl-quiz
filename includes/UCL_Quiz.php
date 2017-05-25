@@ -59,9 +59,9 @@ class UCL_Quiz
 		$this->define_routes();
 
 		if (is_admin()) {
-			require_once 'UclQuizAdmin.php';
+			require_once 'Ucl_Quiz_Admin.php';
 
-			new UclQuizAdmin;
+			new Ucl_Quiz_Admin;
 		}
 	}
 

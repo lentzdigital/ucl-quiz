@@ -45,6 +45,25 @@ jQuery( document ).ready( function( $ ) {
 
 		renderTemplate(data);
 	});
+
+	$(document).on('keyup', '.slides input', function() {
+		var input = $(this),
+			qindex = input.closest('.slide').attr('data-index'),
+			aindex = input.closest('.quiz-answer').attr('data-index'),
+			key = input.attr('data-key'),
+			value = input.val();
+
+		//Convert to boolean if it's a checkbox
+		if (input.attr('type') == 'checkbox') {
+			value = input.prop('checked')
+		}
+
+		if (typeof aindex === 'undefined') {
+			data.questions[qindex][key] = value
+		}else {
+			data.questions[qindex][aindex][key] = value
+		}
+	});
 });
 
 

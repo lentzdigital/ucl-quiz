@@ -3,9 +3,9 @@
 		<label>
 			Fag <br>
 			
-			<select name="uc_course">
+			<select name="uq_course">
 				<?php foreach ($courses as $course) { ?>
-					<option value="<?= $course['id'] ?>"><?= $course['name'] ?></option>
+					<option value="<?= $course['id'] ?>" <?= $course['id'] == $meta['course'] ? 'selected' : '' ?>><?= $course['name'] ?></option>
 				<?php } ?>
 			</select>
 		</label>
@@ -15,9 +15,9 @@
 		<label>
 			Niveau <br>
 			
-			<select name="uc_course">
+			<select name="uq_level">
 				<?php foreach ($levels as $key => $value) { ?>
-					<option value="<?= $key ?>"><?= $value ?></option>
+					<option value="<?= $key ?>" <?= $key == $meta['level'] ? 'selected' : '' ?>><?= $value ?></option>
 				<?php } ?>
 			</select>
 		</label>
