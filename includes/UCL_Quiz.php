@@ -58,6 +58,13 @@ class UCL_Quiz
 		$this->routing = new Routing;
 		$this->define_routes();
 		$this->define_hooks();
+		$this->define_routes();
+
+		if (is_admin()) {
+			require_once 'Ucl_Quiz_Admin.php';
+
+			new Ucl_Quiz_Admin;
+		}
 	}
 
 
@@ -143,5 +150,10 @@ class UCL_Quiz
 	public function get_version()
 	{
 		return $this->version;
+	}
+
+	public function set_tables()
+	{
+	
 	}
 }
