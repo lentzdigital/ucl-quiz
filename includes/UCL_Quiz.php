@@ -46,6 +46,12 @@ class UCL_Quiz
 		$this->load_dependencies();
 		$this->loader = new Loader;
 		$this->define_hooks();
+
+		if (is_admin()) {
+			require_once 'UclQuizAdmin.php';
+
+			new UclQuizAdmin;
+		}
 	}
 
 
