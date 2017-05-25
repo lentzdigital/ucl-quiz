@@ -68,34 +68,7 @@ class Base
 	public static function activation()
 	{
 		self::set_answers();
-
 	}
-
-	private static function set_tables()
-	{
-		global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-
-		require_once __DIR__ . '/DB_Tables.php';
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-		dbDelta( $sql );
-	}
-
-	private static function set_answers() {
-	    global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-
-		require_once __DIR__ . '/DB_Tables.php';
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-		foreach ($sql as $q) {
-			dbDelta($q);	
-		}
-	 }
-
 
 	/**
 	 * Method for deactivation
@@ -116,5 +89,18 @@ class Base
 	public static function uninstall()
 	{
 
+	}
+
+	private static function set_answers() {
+	    global $wpdb;
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+		require_once __DIR__ . '/DB_Tables.php';
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		foreach ($sql as $q) {
+			dbDelta($q);	
+		}
 	}
 }
