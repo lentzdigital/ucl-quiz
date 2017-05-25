@@ -106,10 +106,4 @@ class UCL_Quiz
 	{
 		return $this->version;
 	}
-
-
-	public function set_tables()
-	{
-	
-	}
 }
