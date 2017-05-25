@@ -67,7 +67,7 @@ class Base
 
 	public static function activation()
 	{
-		self::set_answers();
+		self::set_tables();
 	}
 
 	/**
@@ -88,10 +88,15 @@ class Base
 
 	public static function uninstall()
 	{
+		require_once __DIR__ . '/assets/uninstall-tables.php';
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
+		foreach ($sql as $q) {
+			dbDelta($q);	
+		}
 	}
 
-	private static function set_answers() {
+	private static function set_tables() {
 	    global $wpdb;
 
 		$charset_collate = $wpdb->get_charset_collate();
