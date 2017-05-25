@@ -28,16 +28,6 @@ class Base
 		self::set_tables();
 	}
 
-	/**
-	 * Method for deactivation
-	 */
-
-
-	public static function deactivation()
-	{
-
-	}
-
 
 	/**
 	 * Method for uninstall
@@ -48,6 +38,7 @@ class Base
 	{
 		self::delete_tables();
 	}
+
 
 	/**
 	 * Method for creating quiz post type
@@ -92,27 +83,6 @@ class Base
 
 
 	/**
-	 * Method for creating database tables
-	 */
-	
-
-	private static function set_tables() 
-	{
-	    global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-
-		require_once __DIR__ . '/assets/install-tables.php';
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-		foreach($sql as $query) 
-		{
-			dbDelta($query);	
-		}
-	}
-
-
-	/**
 	 * Method for deleting database tables
 	 */
 	
@@ -123,6 +93,27 @@ class Base
 
 		require_once __DIR__ . '/assets/uninstall-tables.php';
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		foreach ($sql as $query) 
+		{
+			dbDelta($query);	
+		}
+	}
+
+
+	/**
+	 * Method for create database tables
+	 */
+
+
+	private static function set_tables() 
+	{
+	    global $wpdb;
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+		require_once __DIR__ . '/assets/install-tables.php';
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 		foreach($sql as $query)
 		{
