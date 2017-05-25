@@ -15,6 +15,15 @@ class UCL_Quiz
 
 
 	/**
+	 * Instant of Routes class
+	 * @var object
+	 */
+	
+
+	protected $routes;
+
+
+	/**
 	 * Plugin slug
 	 * @var string
 	 */
@@ -45,7 +54,9 @@ class UCL_Quiz
 
 		$this->load_dependencies();
 		$this->loader = new Loader;
+		$this->routes = new Routes;
 		$this->define_hooks();
+		$this->define_routes();
 
 		if (is_admin()) {
 			require_once 'UclQuizAdmin.php';
@@ -77,7 +88,10 @@ class UCL_Quiz
 		$this->loader->add_action('init', $base, 'add_post_types');
 	}
 
+	public function define_routes()
+	{
 
+	}
 
 	/**
 	 * Method to load dependencies
@@ -86,6 +100,7 @@ class UCL_Quiz
 
 	private function load_dependencies()
 	{
+		require_once plugin_dir_path(__FILE__) . 'Routes.php';
 		require_once plugin_dir_path(__FILE__) . 'Loader.php';
 		require_once plugin_dir_path(__FILE__) . 'Base.php';
 	}
@@ -99,6 +114,7 @@ class UCL_Quiz
 	public function init()
 	{
 		$this->loader->init();
+		$this->routes->init();
 	}
 
 
@@ -112,7 +128,6 @@ class UCL_Quiz
 	{
 		return $this->version;
 	}
-
 
 	public function set_tables()
 	{
