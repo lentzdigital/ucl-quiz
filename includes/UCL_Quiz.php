@@ -20,7 +20,7 @@ class UCL_Quiz
 	 */
 	
 
-	protected $routes;
+	protected $routing;
 
 
 	/**
@@ -53,10 +53,11 @@ class UCL_Quiz
 		$this->version     = '0.1.0';
 
 		$this->load_dependencies();
-		$this->loader = new Loader;
-		$this->routes = new Routes;
-		$this->define_hooks();
+		$this->load_api_dependencies();
+		$this->loader  = new Loader;
+		$this->routing = new Routing;
 		$this->define_routes();
+		$this->define_hooks();
 	}
 
 
@@ -84,7 +85,8 @@ class UCL_Quiz
 
 	public function define_routes()
 	{
-
+		$quiz = new Quiz;
+		$this->routing->add_route('/quiz/getall/', 'GET', $quiz, 'get_all');
 	}
 
 	/**
@@ -94,9 +96,29 @@ class UCL_Quiz
 
 	private function load_dependencies()
 	{
-		require_once plugin_dir_path(__FILE__) . 'Routes.php';
-		require_once plugin_dir_path(__FILE__) . 'Loader.php';
-		require_once plugin_dir_path(__FILE__) . 'Base.php';
+		$dependencies = [
+			'Routing',
+			'Loader',
+			'Base'
+		];
+
+		foreach($dependencies as $file)
+		{
+			require_once plugin_dir_path(__FILE__) . $file . '.php';
+		}
+	}
+
+
+	private function load_api_dependencies()
+	{
+		$dependecies = [
+			'Quiz'
+		];
+
+		foreach($dependecies as $file)
+		{
+			require_once plugin_dir_path(__FILE__) . 'api/' . $file . '.php';
+		}
 	}
 
 
@@ -108,7 +130,7 @@ class UCL_Quiz
 	public function init()
 	{
 		$this->loader->init();
-		$this->routes->init();
+		$this->routing->init();
 	}
 
 

@@ -1,7 +1,7 @@
 <?php
 if(!defined('WPINC')) die;
 
-class Routes
+class Routing
 {
 
 
@@ -46,7 +46,7 @@ class Routes
 
 	public function add_route($route, $method, $component, $callback)
 	{
-		$this->add($this->routes, $route, $method, $component, $callback);
+		$this->add($route, $method, $component, $callback);
 	}
 
 
@@ -57,22 +57,31 @@ class Routes
 
 	public function init()
 	{
-		foreach($this->routes as $route)
+		foreach($this->routes as $rest)
 		{
-			register_rest_route($this->namespace, $route['route'], [
-				'method'   => $route['method'],
-				'callback' => [
-					$route['component'],
-					$route['callback']
-				], 
-			]);
+			add_action('rest_api_init', function() use($rest)
+			{
+				register_rest_route($this->namespace, $rest['route'], [
+					'methods'  => $rest['method'],
+					'callback' => [
+						$rest['component'],
+						$rest['callback']
+					] 
+				]);
+			});
 		}
+	}
+
+	public function get()
+	{
+		$posts = get_posts();
+
+		return $posts[0]->post_title;
 	}
 
 
 	/**
 	 * Helper method for adding routes to routes array
-	 * @param array $routes    Array containing routes
 	 * @param string $route     URI for route
 	 * @param string $method    HTTP method
 	 * @param object $component Instant of class
@@ -80,15 +89,15 @@ class Routes
 	 */
 	
 
-	private function add($routes, $route, $method, $component, $callback)
+	public function add($route, $method, $component, $callback)
 	{
-		$routes[] = [
+		$this->routes[] = [
 			'route'     => $route,
 			'method'    => $method,
 			'component' => $component,
 			'callback'  => $callback
 		];
 
-		return $routes;
+		return $this->routes;
 	}
 }

@@ -77,7 +77,7 @@ class Loader
 
 		foreach($this->actions as $hook)
 		{
-			add_filter($hook['hook'], [$hook['component'], $hook['callback']]);
+			add_action($hook['hook'], [$hook['component'], $hook['callback']]);
 		}
 	}
 
