@@ -11,7 +11,7 @@ class Loader
 	 */
 	
 
-	protected $actions;
+	private $actions;
 
 
 	/**
@@ -20,7 +20,7 @@ class Loader
 	 */
 	
 
-	protected $filters;
+	private $filters;
 
 
 	/**
