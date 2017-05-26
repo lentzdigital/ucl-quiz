@@ -1,17 +1,27 @@
 .slides-wrapper {
 	display: flex;
 	align-items: center; 
+	flex-direction: column;
 }
 
 .slides {
-	padding: 20px;
+	width: 100%;
 	display: flex;
+	flex-direction: column;
 }
 
 .slide {
-	width: 133px;
-	margin-right: 20px;
+	width: 100%;
 	cursor: pointer;
+	margin-bottom: 25px;
+	display:flex;
+	align-items: center;
+	padding-bottom: 25px;
+	border-bottom: 1px solid #ccc;
+}
+
+.slide:last-child {
+	border-bottom: none;
 }
 
 .slide-placeholder {
@@ -43,4 +53,16 @@
 	background: #dc3232 !important;
 	border-color: #ab2727 !important;
 	color: #fff !important;
+}
+
+.quiz-answer {
+	margin-bottom: 10px;
+}
+
+.quiz-answer label {
+	margin-right: 10px;
+}
+
+.question-wrapper {
+	width: 100%;
 }
