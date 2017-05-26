@@ -13,8 +13,7 @@ class Base
 	public function add_post_types()
 	{
 		$this->add_quiz_post_type();
-		$this->add_question_post_type();
-		$this->add_answer_post_type();
+		$this->add_course_post_type();
 	}
 
 
@@ -49,35 +48,22 @@ class Base
 	{
 		register_post_type('quiz', [
 			'public' => true,
-			'label'  => 'Quizzes'
+			'label'  => 'Quizzes',
+			'supports' => ['title']
 		]);
 	}
 
-
 	/**
-	 * Method for creating question post type
+	 * Method for creating course post type
 	 */
 	
 
-	private function add_question_post_type()
+	private function add_course_post_type()
 	{
-		register_post_type('question', [
+		register_post_type('course', [
 			'public' => true,
-			'label'  => 'Questions'
-		]);
-	}
-
-
-	/**
-	 * Method for creating answer post type
-	 */
-	
-	
-	private function add_answer_post_type()
-	{
-		register_post_type('answer', [
-			'public' => true,
-			'label'  => 'Answers'
+			'label'  => 'Courses',
+			'supports' => ['title']
 		]);
 	}
 

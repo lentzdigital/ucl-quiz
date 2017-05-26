@@ -11,9 +11,13 @@ class Database_Handler {
 
 	public function get_quiz_meta($quiz_id) {
 		return [
-			'course' => get_post_meta($quiz_id, 'uq_width', true),
+			'course' => get_post_meta($quiz_id, 'uq_course', true),
 			'level' => get_post_meta($quiz_id, 'uq_level', true),
 		];
+	}
+
+	public function get_courses() {
+		return get_posts(['post_type' => 'course']);
 	}
 
 	public function get_questions($quiz_id) {

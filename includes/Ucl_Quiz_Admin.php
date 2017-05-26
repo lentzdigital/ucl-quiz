@@ -41,7 +41,7 @@ class Ucl_Quiz_Admin {
 
 	public function display_quiz_info_meta() {
 		$meta = $this->db->get_quiz_meta(get_the_ID());
-		$courses = [['id' => 1, 'name' => 'Biologi']];
+		$courses = $this->db->get_courses();
 		$levels = [1 => "Let", 2 => "Middel", 3 => "Svær"];
 
 		require __DIR__ . '/../views/quiz-info_meta.php';

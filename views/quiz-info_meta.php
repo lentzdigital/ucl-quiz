@@ -5,7 +5,7 @@
 			
 			<select name="uq_course">
 				<?php foreach ($courses as $course) { ?>
-					<option value="<?= $course['id'] ?>" <?= $course['id'] == $meta['course'] ? 'selected' : '' ?>><?= $course['name'] ?></option>
+					<option value="<?= $course->ID ?>" <?= $course->ID == $meta['course'] ? 'selected' : '' ?>><?= $course->post_title ?></option>
 				<?php } ?>
 			</select>
 		</label>
