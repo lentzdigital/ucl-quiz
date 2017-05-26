@@ -24,6 +24,10 @@ class Database_Handler {
 		return get_posts(['post_type' => 'quiz']);
 	}
 
+	public function get_quiz($id) {
+		return get_post($id);
+	}
+
 	public function get_questions($quiz_id, $with_correct = true) {
 		$questions = $this->db->get_results("SELECT * FROM {$this->db->prefix}questions WHERE quiz_id={$quiz_id}");
 		$question_ids = implode(', ', array_column($questions, 'id'));
