@@ -2,6 +2,8 @@
 
 if(!defined('WPINC')) die;
 
+require_once 'Database_Handler.php';
+
 class Ucl_Quiz_Admin {
 	protected $db;
 
@@ -9,6 +11,8 @@ class Ucl_Quiz_Admin {
 		add_action('add_meta_boxes', [$this, 'add_meta_boxes']);
 		add_action('admin_enqueue_scripts', [$this, 'add_scripts_and_styles']);
 		add_action('save_post', [$this, 'save_quiz'], 10, 3);
+
+		$this->db = new Database_Handler;
 	}
 
 	public function add_scripts_and_styles() {
@@ -36,9 +40,8 @@ class Ucl_Quiz_Admin {
 	}
 
 	public function display_quiz_info_meta() {
-		//$meta = $this->db->get_slider_meta(get_the_ID());
-		$meta = [];
-		$courses = [['id' => 1, 'name' => 'Biologi']];
+		$meta = $this->db->get_quiz_meta(get_the_ID());
+		$courses = $this->db->get_courses();
 		$levels = [1 => "Let", 2 => "Middel", 3 => "Svær"];
 
 		require __DIR__ . '/../views/quiz-info_meta.php';
@@ -47,38 +50,7 @@ class Ucl_Quiz_Admin {
 	public function display_questions_meta() {
 		wp_enqueue_script('handlebars');
 		wp_enqueue_script('jquery-ui-sortable');
-		$questions = [
-			[
-				'id' => 1,
-				'question' => 'Test',
-				'hint' => 'hej',
-				'answers' => [
-					[
-						'id' => 1,
-						'answer' => 'ga',
-						'correct' => true
-					],
-					[
-						'id' => 2,
-						'answer' => 'to',
-						'correct' => false
-					]
-				]
-			],
-			[
-				'id' => 2,
-				'question' => 'Tsfdsest',
-				'hint' => 'hdsfdsej',
-				'answers' => [
-					[
-						'id' => 3,
-						'answer' => 'gasada',
-						'correct' => true
-					]
-				]
-			]
-		];
-
+		$questions = $this->db->get_questions(get_the_ID());
 		wp_localize_script('ucl_quiz_admin_js', 'question_data', $questions);
 		wp_enqueue_script('ucl_quiz_admin_js');
 
@@ -88,8 +60,34 @@ class Ucl_Quiz_Admin {
 	public function save_quiz($post_id, $post, $update) {
 		if (!isset($_POST) || count($_POST) == 0 || get_post_type($post_id) != 'quiz') return;
 
-		echo "<pre>";
-		var_dump($_POST);
-		die();
+		if (isset($_POST['uq_course']) && is_numeric($_POST['uq_course'])) {
+            update_post_meta($post_id, 'uq_course', $_POST['uq_course']);
+        }
+
+		if (isset($_POST['uq_level']) && is_numeric($_POST['uq_course'])) {
+            update_post_meta($post_id, 'uq_level', $_POST['uq_level']);
+        }
+
+		if (isset($_POST['uq_name'])) {
+			$this->db->delete_questions($post_id);
+
+			for ($i = 0; $i < count($_POST['uq_name']); $i++) {
+				$question = sanitize_text_field($_POST['uq_name'][$i]);
+				$hint = sanitize_text_field($_POST['uq_hint'][$i]);
+
+				$question_id = $this->db->save_question($post_id, $question, $hint);
+
+				if (!isset($_POST['uq_answers'][$i])) {
+					continue;
+				}
+
+				for ($j = 0; $j < count($_POST['uq_answers'][$i]); $j++) {
+					$answer = sanitize_text_field($_POST['uq_answers'][$i][$j]['name']);
+					$correct = isset($_POST['uq_answers'][$i][$j]['correct']) ? 1 : 0;
+
+					$this->db->save_answer($question_id, $answer, $correct);
+				}
+			}
+		}
 	}
 }
