@@ -93,7 +93,9 @@ class UCL_Quiz
 	public function define_routes()
 	{
 		$quiz = new Quiz;
-		$this->routing->add_route('/quiz/getall/', 'GET', $quiz, 'get_all');
+		$this->routing->add_route('/quiz/', 'GET', $quiz, 'index');
+		$this->routing->add_route('/quiz/((?P<id>\d+))', 'GET', $quiz, 'show');
+
 	}
 
 	/**

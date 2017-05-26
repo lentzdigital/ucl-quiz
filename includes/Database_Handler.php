@@ -20,15 +20,32 @@ class Database_Handler {
 		return get_posts(['post_type' => 'course']);
 	}
 
-	public function get_questions($quiz_id) {
+	public function get_quizzes() {
+		return get_posts(['post_type' => 'quiz']);
+	}
+
+	public function get_questions($quiz_id, $with_correct = true) {
 		$questions = $this->db->get_results("SELECT * FROM {$this->db->prefix}questions WHERE quiz_id={$quiz_id}");
 		$question_ids = implode(', ', array_column($questions, 'id'));
 		$answers = $this->db->get_results("SELECT * FROM {$this->db->prefix}answers WHERE question_id IN ({$question_ids})");
 
-		array_walk($questions, function(&$question) use($answers) {
-			$question->answers = array_values(array_filter($answers, function($answer) use ($question) {
+		array_walk($questions, function(&$question) use($answers, $with_correct) 
+		{
+			$question->answers = array_values(array_filter($answers, function($answer) use ($question) 
+			{
 				return $answer->question_id == $question->id;
 			}));
+
+			//Remove the correct key if $with_correct is false
+			if (!$with_correct) 
+			{
+				$question->answers = array_map(function($answer)
+				{
+					unset($answer->correct);
+
+					return $answer;
+				}, $question->answers);
+			}
 		});
 
 		return $questions;

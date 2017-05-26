@@ -1,25 +1,38 @@
 <?php
 if(!defined('WPINC')) die;
 
+require_once plugin_dir_path(__FILE__) . '/../Database_Handler.php';
+
 class Quiz
 {
-	public function get_all()
+	private $db;
+
+	public function __construct() 
 	{
-		$query = get_posts(['post_type' => 'quiz']);
+		$this->db = new Database_Handler;
+	}
 
-		$output = [];
+	public function index()
+	{
 
-		foreach($query as $quiz)
+		$quizzes = $this->db->get_quizzes();
+
+		return array_map(function(&$quiz) 
 		{
-			$data['title'] = $quiz->post_title;
+			$meta = $this->db->get_quiz_meta($quiz->ID);
 
-			array_push($output, $data);
-		}
+			return [
+				'id' => $quiz->ID,
+				'title' => $quiz->post_title,
+				'course_id' => $meta['course'],
+				'level' => $meta['level'],
+				'questions' => $this->db->get_questions($quiz->ID, false)
+			];
+		}, $quizzes);
+	}
 
-		if(!isset($output) || empty($output)) {
-			return false;
-		}
-
-		return $output;
+	public function show($data) 
+	{
+		return "Single quiz";
 	}
 }
