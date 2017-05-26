@@ -61,11 +61,16 @@ jQuery( document ).ready( function( $ ) {
 		if (typeof aindex === 'undefined') {
 			data.questions[qindex][key] = value
 		}else {
-			data.questions[qindex][aindex][key] = value
+			data.questions[qindex].answers[aindex][key] = value
 		}
 	});
 });
 
+Handlebars.registerHelper('isCorrect', function(item, options) {
+	if (item == 1) {
+		return options.fn(this);
+	}
+})
 
 function renderTemplate(data) {
 	var template = Handlebars.compile(jQuery("#quiz-template").html());

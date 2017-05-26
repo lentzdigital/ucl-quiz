@@ -30,7 +30,7 @@
 
 						<label>
 							Rigtigt <br>
-							<input type="checkbox" name="uq_answers[{{ qindex }}][{{ aindex }}][correct]" data-key="correct" class="large-text" {{#if answer.correct }}checked{{/if}}>
+							<input type="checkbox" name="uq_answers[{{ qindex }}][{{ aindex }}][correct]" data-key="correct" class="large-text" {{#isCorrect answer.correct }}checked{{/isCorrect}}>
 						</label>
 
 						<div class="button uq-delete-answer">Slet svar</div>
