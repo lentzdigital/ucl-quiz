@@ -46,7 +46,14 @@ class Routing
 
 	public function add_route($route, $method, $component, $callback)
 	{
-		$this->add($route, $method, $component, $callback);
+		$this->routes[] = [
+			'route'     => $route,
+			'method'    => $method,
+			'component' => $component,
+			'callback'  => $callback
+		];
+
+		return $this->routes;
 	}
 
 
@@ -76,32 +83,4 @@ class Routing
 		});
 	}
 
-	public function get()
-	{
-		$posts = get_posts();
-
-		return $posts[0]->post_title;
-	}
-
-
-	/**
-	 * Helper method for adding routes to routes array
-	 * @param string $route     URI for route
-	 * @param string $method    HTTP method
-	 * @param object $component Instant of class
-	 * @param string $callback  Method name from init class
-	 */
-	
-
-	public function add($route, $method, $component, $callback)
-	{
-		$this->routes[] = [
-			'route'     => $route,
-			'method'    => $method,
-			'component' => $component,
-			'callback'  => $callback
-		];
-
-		return $this->routes;
-	}
 }
