@@ -13,6 +13,14 @@ class Quiz
 		$this->db = new Database_Handler;
 	}
 
+
+	/**
+	 * get all quizzes
+	 * 
+	 * @return array list of quizzes
+	 */
+
+
 	public function index()
 	{
 
@@ -24,12 +32,28 @@ class Quiz
 		}, $quizzes);
 	}
 
+
+	/**
+	 * Gets a single quiz by id
+	 * 
+	 * @return object quiz
+	 */
+
+
 	public function show($request) 
 	{
 		$quiz = $this->db->get_quiz($request->get_param('id'));
 
 		return $this->format_quiz($quiz);
 	}
+
+
+	/**
+	 * Formats a quiz
+	 * 
+	 * @return object quiz
+	 */
+
 
 	private function format_quiz($quiz) 
 	{

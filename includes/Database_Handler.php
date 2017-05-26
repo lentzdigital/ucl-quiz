@@ -55,6 +55,10 @@ class Database_Handler {
 		return $questions;
 	}
 
+	public function get_correct_answer($question_id) {
+		return $this->db->get_row("SELECT * FROM {$this->db->prefix}answers WHERE question_id={$question_id} AND correct=1");
+	}
+
 	public function delete_questions($quiz_id) {
 		$question_ids = implode(', ', $this->db->get_col("SELECT id FROM {$this->db->prefix}questions WHERE quiz_id=$quiz_id"));
 
