@@ -11,6 +11,12 @@ class Leaderboard
 		$this->db = new Database_Handler;
 	}
 
+
+	/**
+	 * Returns leaderboard for a specific quiz
+	 */
+
+
 	public function show($request) 
 	{
 		$quiz_id = $request->get_param('id');

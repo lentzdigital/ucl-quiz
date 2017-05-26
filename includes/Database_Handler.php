@@ -11,6 +11,12 @@ class Database_Handler
 		$this->db = $wpdb;
 	}
 
+
+	/**
+	 * Gets meta data for a quiz
+	 */
+
+
 	public function get_quiz_meta($quiz_id) 
 	{
 		return [
@@ -19,20 +25,40 @@ class Database_Handler
 		];
 	}
 
+
+	/**
+	 * Gets all courses
+	 */
+
+
 	public function get_courses() 
 	{
 		return get_posts(['post_type' => 'course']);
 	}
+
+	/**
+	 * Gets all quizzes
+	 */
 
 	public function get_quizzes() 
 	{
 		return get_posts(['post_type' => 'quiz']);
 	}
 
+	/**
+	 * Gets a specific quiz
+	 */
+
 	public function get_quiz($id) 
 	{
 		return get_post($id);
 	}
+
+
+	/**
+	 * Gets all questions and answers for a quiz
+	 */
+
 
 	public function get_questions($quiz_id, $with_correct = true) 
 	{
@@ -62,10 +88,22 @@ class Database_Handler
 		return $questions;
 	}
 
+
+	/**
+	 * Gets correct answer for a question
+	 */
+
+
 	public function get_correct_answer($question_id) 
 	{
 		return $this->db->get_row("SELECT * FROM {$this->db->prefix}answers WHERE question_id={$question_id} AND correct=1");
 	}
+
+
+	/**
+	 * Gets first quiz result for every user
+	 */
+
 
 	public function get_leaderboard($quiz_id) 
 	{
@@ -80,6 +118,12 @@ class Database_Handler
 		);
 	}
 
+
+	/**
+	 * Gets how many correct answer a user has for a quiz
+	 */
+
+
 	public function get_correct_count($user_quiz_id) 
 	{
 		$uat = "{$this->db->prefix}user_answer";
@@ -93,10 +137,22 @@ class Database_Handler
 		);
 	}
 
+
+	/**
+	 * Gets amount of questions for a quiz
+	 */
+
+
 	public function get_question_count($quiz_id) 
 	{
 		return $this->db->get_var("SELECT COUNT(*) FROM {$this->db->prefix}questions WHERE quiz_id={$quiz_id}");
 	}
+
+
+	/**
+	 * Deletes a question and its answers
+	 */
+
 
 	public function delete_questions($quiz_id) 
 	{
@@ -105,6 +161,10 @@ class Database_Handler
 		$this->db->query("DELETE FROM {$this->db->prefix}answers WHERE question_id IN ($question_ids)");
 		$this->db->delete("{$this->db->prefix}questions", ['quiz_id' => $quiz_id]);
 	}
+
+	/**
+	 * Saves a question
+	 */
 
 	public function save_question($quiz_id, $question, $hint) 
 	{
@@ -117,6 +177,12 @@ class Database_Handler
 		return $this->db->insert_id;
 	}
 
+	
+	/**
+	 * Saves an answer
+	 */
+
+
 	public function save_answer($question_id, $answer, $correct) 
 	{
 		$this->db->insert("{$this->db->prefix}answers", [
@@ -128,6 +194,12 @@ class Database_Handler
 		return $this->db->insert_id;
 	}
 
+
+	/**
+	 * Saves a quiz entry for a user
+	 */
+
+
 	public function save_user_quiz($user_id, $quiz_id, $time) 
 	{
 		$this->db->insert("{$this->db->prefix}user_quiz", [
@@ -138,6 +210,12 @@ class Database_Handler
 
 		return $this->db->insert_id;
 	}
+
+
+	/**
+	 * Saves answers for a users quiz result
+	 */
+
 
 	public function save_user_answer($user_quiz_id, $answer) 
 	{
