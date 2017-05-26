@@ -58,6 +58,13 @@ class UCL_Quiz
 		$this->routing = new Routing;
 		$this->define_routes();
 		$this->define_hooks();
+
+		if (is_admin()) {
+			require_once 'Ucl_Quiz_Admin.php';
+
+			new Ucl_Quiz_Admin;
+		}
+
 	}
 
 
