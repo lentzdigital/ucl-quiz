@@ -32,7 +32,6 @@ $sql[] = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."questions (
 $sql[] = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."user_answer (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
   user_quiz_id int(11) DEFAULT NULL,
-  user_id int(10) unsigned NOT NULL,
   answer_id int(10) unsigned NOT NULL,
   PRIMARY KEY  (id)
 ) $charset_collate;";

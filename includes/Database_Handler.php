@@ -81,4 +81,25 @@ class Database_Handler {
 
 		return $this->db->insert_id;
 	}
+
+	public function save_user_quiz($user_id, $quiz_id, $time) 
+	{
+		$this->db->insert("{$this->db->prefix}user_quiz", [
+			'user_id' => $user_id,
+			'quiz_id' => $quiz_id,
+			'time' => $time
+		], ['%d', '%d', '%d']);
+
+		return $this->db->insert_id;
+	}
+
+	public function save_user_answer($user_quiz_id, $answer) 
+	{
+		$this->db->insert("{$this->db->prefix}user_answer", [
+			'user_quiz_id' => $user_quiz_id,
+			'answer_id' => $answer
+		], ['%d', '%s']);
+
+		return $this->db->insert_id;
+	}
 }

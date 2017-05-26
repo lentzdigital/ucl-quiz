@@ -96,6 +96,12 @@ class UCL_Quiz
 		$this->routing->add_route('/quiz/', 'GET', $quiz, 'index');
 		$this->routing->add_route('/quiz/((?P<id>\d+))', 'GET', $quiz, 'show');
 
+		$userquiz = new User_Quiz;
+		$this->routing->add_route('/user/quiz/((?P<id>\d+))', 'POST', $userquiz, 'store');
+
+		$auth = new Auth;
+		$this->routing->add_route('/user/login', 'POST', $auth, 'login');
+		$this->routing->add_route('/user/logout', 'POST', $auth, 'logout');
 	}
 
 	/**
@@ -121,7 +127,9 @@ class UCL_Quiz
 	private function load_api_dependencies()
 	{
 		$dependecies = [
-			'Quiz'
+			'Quiz',
+			'User_Quiz',
+			'Auth'
 		];
 
 		foreach($dependecies as $file)

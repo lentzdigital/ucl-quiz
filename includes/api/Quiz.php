@@ -1,4 +1,5 @@
 <?php
+
 if(!defined('WPINC')) die;
 
 require_once plugin_dir_path(__FILE__) . '/../Database_Handler.php';
