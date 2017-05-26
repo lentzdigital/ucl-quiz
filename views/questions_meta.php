@@ -1,7 +1,6 @@
 <div class="slides-wrapper">
-	<div class="slides">
-	</div>
-
+	<div class="slides"></div>
+	
 	<div class="button-primary uq-add">+</div>
 </div>
 
