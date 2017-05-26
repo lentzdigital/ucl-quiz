@@ -104,7 +104,7 @@ class UCL_Quiz
 		$this->routing->add_route('/user/logout', 'POST', $auth, 'logout');
 
 		$leaderboard = new Leaderboard;
-		$this->routing->add_route('/leaderboard/((?P<id>\d+))', 'get', $leaderboard, 'show');
+		$this->routing->add_route('/leaderboard/((?P<id>\d+))', 'GET', $leaderboard, 'show');
 	}
 
 	/**

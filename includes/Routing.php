@@ -57,9 +57,13 @@ class Routing
 
 	public function init()
 	{
-		foreach($this->routes as $rest)
+		if (count($this->routes) == 0) {
+			return;
+		}
+
+		add_action('rest_api_init', function()
 		{
-			add_action('rest_api_init', function() use($rest)
+			foreach($this->routes as $rest)
 			{
 				register_rest_route($this->namespace, $rest['route'], [
 					'methods'  => $rest['method'],
@@ -68,8 +72,8 @@ class Routing
 						$rest['callback']
 					] 
 				]);
-			});
-		}
+			}
+		});
 	}
 
 	public function get()
