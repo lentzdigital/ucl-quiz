@@ -4,7 +4,8 @@ if(!defined('WPINC')) die;
 
 require_once plugin_dir_path(__FILE__) . '/../Database_Handler.php';
 
-class User_Quiz {
+class User_Quiz 
+{
 	private $db;
 
 	public function __construct() {

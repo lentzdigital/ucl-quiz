@@ -55,8 +55,38 @@ class Database_Handler {
 		return $questions;
 	}
 
-	public function get_correct_answer($question_id) {
+	public function get_correct_answer($question_id) 
+	{
 		return $this->db->get_row("SELECT * FROM {$this->db->prefix}answers WHERE question_id={$question_id} AND correct=1");
+	}
+
+	public function get_leaderboard($quiz_id) 
+	{
+		$qt = "{$this->db->prefix}user_quiz";
+		$ut = "{$this->db->prefix}users";
+
+		return $this->db->get_results(
+			"SELECT $qt.id, $qt.user_id, $qt.time as time_seconds, $ut.user_nicename as name 
+			 FROM $qt 
+			 JOIN $ut ON $ut.id=$qt.user_id 
+			 GROUP BY user_id"
+		);
+	}
+
+	public function get_correct_count($user_quiz_id) {
+		$uat = "{$this->db->prefix}user_answer";
+		$at = "{$this->db->prefix}answers";
+
+		return $this->db->get_var(
+			"SELECT SUM(correct) 
+			 FROM $uat
+			 JOIN $at ON $at.id=$uat.answer_id
+			 WHERE user_quiz_id={$user_quiz_id}"
+		);
+	}
+
+	public function get_question_count($quiz_id) {
+		return $this->db->get_var("SELECT COUNT(*) FROM {$this->db->prefix}questions WHERE quiz_id={$quiz_id}");
 	}
 
 	public function delete_questions($quiz_id) {

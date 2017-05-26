@@ -102,6 +102,9 @@ class UCL_Quiz
 		$auth = new Auth;
 		$this->routing->add_route('/user/login', 'POST', $auth, 'login');
 		$this->routing->add_route('/user/logout', 'POST', $auth, 'logout');
+
+		$leaderboard = new Leaderboard;
+		$this->routing->add_route('/leaderboard/((?P<id>\d+))', 'get', $leaderboard, 'show');
 	}
 
 	/**
@@ -114,7 +117,7 @@ class UCL_Quiz
 		$dependencies = [
 			'Routing',
 			'Loader',
-			'Base'
+			'Base',
 		];
 
 		foreach($dependencies as $file)
@@ -129,7 +132,8 @@ class UCL_Quiz
 		$dependecies = [
 			'Quiz',
 			'User_Quiz',
-			'Auth'
+			'Auth',
+			'Leaderboard',
 		];
 
 		foreach($dependecies as $file)
